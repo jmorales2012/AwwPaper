@@ -1,8 +1,9 @@
-"""AwwPaper: Pull the daily top post from reddit.com/r/aww and set as wallpaper
-
+# -*- coding: utf-8 -*-
+'''
+AwwPaper: Pull the daily top post from reddit.com/r/aww and set as wallpaper
 Read README for instructions on how to run program continuously in the
 background even when you close terminal.
-"""
+'''
 
 
 import os
