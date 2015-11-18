@@ -1,6 +1,6 @@
 Daily Wallpaper
 
-Pulls the top post from reddit.com/r/earthporn every 24 hours and sets the picture as your desktop background.
+Pulls the top post from reddit.com/r/earthporn every 24 hours and sets the picture as your desktop background. It has been verified to run on Windows 10.
 
 Program will pull top post from reddit.com/r/earthporn/top and set as background
 image anytime it is run.
