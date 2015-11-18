@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 '''
-AwwPaper: Pull the daily top post from reddit.com/r/aww and set as wallpaper
+EarthPaper: Pull the daily top post from reddit.com/r/earthporn and set as wallpaper
 Read README for instructions on how to run program continuously in the
 background even when you close terminal.
 '''
-
 
 import os
 import sys
@@ -15,13 +14,12 @@ import requests
 import datetime
 import subprocess
 
-
 def create_dir(directory):
-    """Check to see if a directory exists. If not, create it.
+    '''Check to see if a directory exists. If not, create it.
 
     Args:
         directory: Name of the directory we want to check/create
-    """
+    '''
 
     dPath = os.getcwd() + '/' + directory + '/'
     os.makedirs(dPath, exist_ok=True)
@@ -29,11 +27,11 @@ def create_dir(directory):
 
 
 def get_picture(redditURL):
-    """Uses redditURL to find top post and download image from imgur
+    '''Uses redditURL to find top post and download image from imgur
 
     Args:
         redditURL: link to reddit/r/aww/top
-    """
+    '''
 
     # Create unique user-agent for header to get into Reddit, download page
     headers = {'user-agent': 'Mac OSX:https://github.com/jmorales2012/\
@@ -72,19 +70,19 @@ def get_picture(redditURL):
 
 
 def set_background(filename):
-    """Set the top /r/aww image to background wallpaper
+    '''Set the top /r/aww image to background wallpaper
 
     Args:
         imageFile: Is the full path of the image downloaded in get_picture()
-    """
+    '''
     # Used for Mac OS X
     if sys.platform == 'darwin':
 
-        SCRIPT = """/usr/bin/osascript<<END
+        SCRIPT = '''/usr/bin/osascript<<END
         tell application "Finder"
         set desktop picture to POSIX file "%s"
         end tell
-        """
+        '''
 
         subprocess.Popen(SCRIPT % filename, shell=True)
 
@@ -104,7 +102,7 @@ if __name__ == '__main__':
         print('Read the README to run the program in the background!\n')
         print('Downloading...')
 
-        redditURL = 'https://www.reddit.com/r/aww/top/'
+        redditURL = 'https://www.reddit.com/r/earthporn/top/'
 
         filename = get_picture(redditURL)
         set_background(filename)
@@ -113,7 +111,7 @@ if __name__ == '__main__':
 
     # Run the program only one time
     print('Downloading...')
-    redditURL = 'https://www.reddit.com/r/aww/top/'
+    redditURL = 'https://www.reddit.com/r/earthporn/top/'
 
     filename = get_picture(redditURL)
     set_background(filename)
