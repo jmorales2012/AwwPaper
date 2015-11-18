@@ -1,8 +1,8 @@
 Daily Wallpaper
 
-Pulls the top post from reddit.com/r/aww every 24 hours and sets the picture as your desktop background.
+Pulls the top post from reddit.com/r/earthporn every 24 hours and sets the picture as your desktop background.
 
-Program will pull top post from reddit.com/r/aww/top and set as background
+Program will pull top post from reddit.com/r/earthporn/top and set as background
 image anytime it is run.
 
 **To make the program run in the background every 24 hours, follow steps below:
