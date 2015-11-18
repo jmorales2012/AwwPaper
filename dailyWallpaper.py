@@ -4,7 +4,6 @@ EarthPaper: Pull the daily top post from reddit.com/r/earthporn and set as wallp
 Read README for instructions on how to run program continuously in the
 background even when you close terminal.
 '''
-
 import os
 import sys
 import bs4
@@ -14,25 +13,22 @@ import requests
 import datetime
 import subprocess
 
+redditURL = 'https://www.reddit.com/r/earthporn/top/'
+
 def create_dir(directory):
     '''Check to see if a directory exists. If not, create it.
-
     Args:
         directory: Name of the directory we want to check/create
     '''
-
-    dPath = os.getcwd() + '/' + directory + '/'
+    dPath = os.getcwd() + '\\' + directory + '\\'
     os.makedirs(dPath, exist_ok=True)
     return dPath
 
-
 def get_picture(redditURL):
     '''Uses redditURL to find top post and download image from imgur
-
     Args:
-        redditURL: link to reddit/r/aww/top
+        redditURL: link to subreddit
     '''
-
     # Create unique user-agent for header to get into Reddit, download page
     headers = {'user-agent': 'Mac OSX:https://github.com/jmorales2012/\
                 Daily-Wallpaper:v1 (by /u/IAmAmbitious)'}
@@ -55,27 +51,28 @@ def get_picture(redditURL):
     picElem = imgurParsed.select('a.zoom')
     picURL = 'http:' + picElem[0].get('href')
 
-    # Download image from imgur
+    # Download image from imgur and get file extension
     print('Downloading pic from ' + picURL)
     topPic = requests.get(picURL)
     topPic.raise_for_status
+    ext = ['.jpg', '.jpeg', '.png', 'gif']
+    name_ext = [x for x in ext if x in picURL]
 
     # Create folder & file and write in picture data
-    filename = create_dir('wallpapers') + str(datetime.date.today())
+    filename = create_dir('wallpapers') + str(datetime.date.today()) \
+    + name_ext[0]
     with open(filename, 'wb') as imageFile:
         for chunk in topPic.iter_content(100000):
             imageFile.write(chunk)
 
     return filename
 
-
 def set_background(filename):
-    '''Set the top /r/aww image to background wallpaper
-
+    '''Set the top /r/earthporn image to background wallpaper
     Args:
         imageFile: Is the full path of the image downloaded in get_picture()
     '''
-    # Used for Mac OS X
+    # Used for Mac OS X (not verified working)
     if sys.platform == 'darwin':
 
         SCRIPT = '''/usr/bin/osascript<<END
@@ -83,15 +80,14 @@ def set_background(filename):
         set desktop picture to POSIX file "%s"
         end tell
         '''
-
         subprocess.Popen(SCRIPT % filename, shell=True)
 
-    # Used for Windows
+    # Used for Windows 10
     elif sys.platform == 'win32':
+        print(filename)
         SPI_SETDESKWALLPAPER = 20
-        ctypes.windll.user32.SystemParametersInfoA(SPI_SETDESKWALLPAPER, 0,
-                                                   filename)
-
+        ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0,
+                                                   filename, 0)
 
 if __name__ == '__main__':
 
@@ -102,8 +98,6 @@ if __name__ == '__main__':
         print('Read the README to run the program in the background!\n')
         print('Downloading...')
 
-        redditURL = 'https://www.reddit.com/r/earthporn/top/'
-
         filename = get_picture(redditURL)
         set_background(filename)
         # Runs the loop every 24 hours
@@ -111,7 +105,5 @@ if __name__ == '__main__':
 
     # Run the program only one time
     print('Downloading...')
-    redditURL = 'https://www.reddit.com/r/earthporn/top/'
-
     filename = get_picture(redditURL)
     set_background(filename)
